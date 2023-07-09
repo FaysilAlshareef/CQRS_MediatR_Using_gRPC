@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "Task1.CQRS_MediatR_Using_gRPC.Protos";
+
+service Student {
+	rpc Create (CreateRequest) returns (Responce);
+	rpc Update (UpdateStudentRequest) returns (Responce);
+}
+
+
+message CreateRequest{
+	string name = 1;
+	string address = 2;
+	string phoneNumber = 3;
+}
+
+message UpdateStudentRequest{
+	string name = 1;
+	string phoneNumber = 2;
+}
+
+
+message StudentOutput {
+	string id = 1;
+	string name =2;
+	string address =3;
+	string phoneNumber =4;
+}
+message Responce{
+	string message =1;
+	StudentOutput output =2;
+}
