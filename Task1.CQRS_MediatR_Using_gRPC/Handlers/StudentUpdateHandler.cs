@@ -4,10 +4,10 @@ using Task1.CQRS_MediatR_Using_gRPC.ReturnMessages;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Handlers;
 
-public class UpdateStudentHandler : IRequestHandler<UpdateStudentCommand, string>
+public class StudentUpdateHandler : IRequestHandler<StudentUpdateCommand, string>
 {
 
-    public async Task<string> Handle(UpdateStudentCommand command, CancellationToken cancellationToken)
+    public async Task<string> Handle(StudentUpdateCommand command, CancellationToken cancellationToken)
     {
 
         return Messages.StudentUpdateSuccess;

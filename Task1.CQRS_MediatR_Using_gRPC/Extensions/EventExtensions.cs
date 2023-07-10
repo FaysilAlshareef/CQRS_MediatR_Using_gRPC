@@ -6,7 +6,7 @@ namespace Task1.CQRS_MediatR_Using_gRPC.Extensions;
 
 public static class EventExtensions
 {
-    public static StudentAddedEvent ToEvent(this AddStudentCommand command)
+    public static StudentAddedEvent ToEvent(this StudentAddCommand command)
         => new(
             Guid.NewGuid(),
             "1",

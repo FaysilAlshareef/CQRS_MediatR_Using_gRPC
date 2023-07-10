@@ -24,7 +24,7 @@ public class StudentService : Student.StudentBase
 
         return new Responce()
         {
-            Message = "Success Added",
+            Message = "Success Added Student",
             Output = student.ToOutput()
         };
     }

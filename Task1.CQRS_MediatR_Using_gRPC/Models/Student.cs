@@ -14,7 +14,7 @@ public class Student : Aggregate<Student>
 
     #region Create
 
-    public static Student Create(AddStudentCommand command)
+    public static Student Create(StudentAddCommand command)
     {
         var @event = command.ToEvent();
         var student = new Student();

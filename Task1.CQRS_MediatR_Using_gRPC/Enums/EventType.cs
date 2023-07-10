@@ -2,6 +2,5 @@
 
 public enum EventType
 {
-    StudentAdded,
-    StudentUpdated
+    StudentAdded
 }

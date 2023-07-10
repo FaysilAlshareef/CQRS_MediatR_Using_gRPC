@@ -2,7 +2,7 @@
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Commands;
 
-public record UpdateStudentCommand(
+public record StudentUpdateCommand(
     string Name,
     string Phone_Number) : IRequest<string>;
 
