@@ -1,4 +1,5 @@
 using Azure.Messaging.ServiceBus;
+using Calzolari.Grpc.AspNetCore.Validation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Task1.CQRS_MediatR_Using_gRPC.Data;
@@ -21,7 +22,10 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddGrpc();
+
+        builder.Services.AddGrpcValidation();
+        builder.Services.AddStudentValidators();
+        builder.Services.AddGrpc(o => o.EnableMessageValidation());
         builder.Services.AddSingleton(typeof(ServiceBusPublisher));
         builder.Services.AddSingleton(s =>
         {
