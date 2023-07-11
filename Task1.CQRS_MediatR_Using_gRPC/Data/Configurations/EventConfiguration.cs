@@ -14,6 +14,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                .HasConversion<string>();
 
         builder.HasDiscriminator(e => e.Type)
-               .HasValue<StudentAddedEvent>(EventType.StudentAdded);
+               .HasValue<StudentAddedEvent>(EventType.StudentAdded)
+               .HasValue<StudentUpdatedEvent>(EventType.StudentUpdated);
     }
 }

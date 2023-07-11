@@ -1,10 +1,11 @@
 ﻿using Grpc.Core;
 using MediatR;
 using Task1.CQRS_MediatR_Using_gRPC.Extensions;
+
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
 
 
-namespace Task1.CQRS_MediatR_Using_gRPC.Services;
+namespace Task1.CQRS_MediatR_Using_gRPC.GrpcServices;
 
 public class StudentService : Student.StudentBase
 {
@@ -32,11 +33,13 @@ public class StudentService : Student.StudentBase
     public override async Task<Responce> Update(UpdateStudentRequest request, ServerCallContext context)
     {
         var command = request.ToCommand();
-        var response = await _mediator.Send(command);
+        var student = await _mediator.Send(command);
 
         return new Responce()
         {
-            Message = response
+            Message = "",
+            Output = student.ToOutput()
+
         };
     }
 }

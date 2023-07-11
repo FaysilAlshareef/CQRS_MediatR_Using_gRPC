@@ -31,4 +31,23 @@ public class Student : Aggregate<Student>
     }
 
     #endregion
+
+
+    #region Update
+
+    public void Update(StudentUpdateCommand command)
+    {
+        if (Name == command.Name && PhoneNumber == command.Phone_Number)
+            return;
+
+        var @event = command.ToEvent(Sequence + 1);
+        ApplyChange(@event);
+    }
+
+    public void Apply(StudentUpdatedEvent @event)
+    {
+        Name = @event.Data.Name;
+        PhoneNumber = @event.Data.Phone_Number;
+    }
+    #endregion
 }

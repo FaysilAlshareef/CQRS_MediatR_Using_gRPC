@@ -10,5 +10,5 @@ public static class CommandExtensions
         => new(request.Name, request.Address, request.PhoneNumber);
 
     public static StudentUpdateCommand ToCommand(this UpdateStudentRequest request)
-        => new(request.Name, request.PhoneNumber);
+        => new(Guid.Parse(request.StudentId), request.Name, request.PhoneNumber);
 }

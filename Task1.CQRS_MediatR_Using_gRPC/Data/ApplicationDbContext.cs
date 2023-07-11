@@ -7,26 +7,33 @@ using Task1.CQRS_MediatR_Using_gRPC.Enums;
 using Task1.CQRS_MediatR_Using_gRPC.Events;
 using Task1.CQRS_MediatR_Using_gRPC.Events.DataTypes;
 using Task1.CQRS_MediatR_Using_gRPC.Models;
+using Task1.CQRS_MediatR_Using_gRPC.Services;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Data;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
+    private readonly ServiceBusPublisher _publisher;
+
+    public ApplicationDbContext(DbContextOptions options, ServiceBusPublisher publisher) : base(options)
     {
+        _publisher = publisher;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new EventConfiguration());
         modelBuilder.ApplyConfiguration(new GenericEventConfiguration<StudentAddedEvent, StudentAddedData>());
+        modelBuilder.ApplyConfiguration(new GenericEventConfiguration<StudentUpdatedEvent, StudentUpdatedData>());
         modelBuilder.ApplyConfiguration(new UniqueReferenceConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
 
 
         base.OnModelCreating(modelBuilder);
     }
     public DbSet<UniqueReference> UniqueReferences { get; set; }
     public DbSet<Event> EventStore { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
 
     public async Task CommitNewEventsAsync(Student student)
@@ -35,21 +42,15 @@ public class ApplicationDbContext : DbContext
 
         await EventStore.AddRangeAsync(newEvents);
 
-        //var messages = OutboxMessage.ToManyMessages(newEvents);
+        var messages = OutboxMessage.ToManyMessages(newEvents);
 
-        //await OutboxMessages.AddRangeAsync(messages);
-
-        foreach (var @event in newEvents)
-        {
-            if (@event.Type == EventType.StudentAdded)
-                await UniqueReferences.AddAsync(new UniqueReference(student));
-        }
+        await OutboxMessages.AddRangeAsync(messages);
 
         await SaveChangesAsync();
 
 
-        //student.MarkChangesAsCommitted();
+        student.MarkChangesAsCommitted();
+        _publisher.PublishAsync();
 
-        //await _publisher.PublishAsync(messages);
     }
 }

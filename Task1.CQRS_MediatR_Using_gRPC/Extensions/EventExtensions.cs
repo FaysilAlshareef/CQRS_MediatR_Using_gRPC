@@ -16,4 +16,16 @@ public static class EventExtensions
                 command.Phone_Number
                 )
             );
+
+    public static StudentUpdatedEvent ToEvent(this StudentUpdateCommand command, int sequence)
+        => new(
+            command.studentId,
+              "1",
+              sequence,
+              new StudentUpdatedData(
+                  command.studentId,
+                  command.Name,
+                  command.Phone_Number
+                  )
+            );
 }

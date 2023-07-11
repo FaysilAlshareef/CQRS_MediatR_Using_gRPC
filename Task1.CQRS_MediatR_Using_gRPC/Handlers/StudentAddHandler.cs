@@ -25,6 +25,8 @@ public class StudentAddHandler : IRequestHandler<StudentAddCommand, Student>
         }
 
         var student = Student.Create(command);
+        await _context.UniqueReferences.AddAsync(new UniqueReference(student));
+
         await _context.CommitNewEventsAsync(student);
 
         return student;

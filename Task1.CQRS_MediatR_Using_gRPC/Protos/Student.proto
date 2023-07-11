@@ -17,6 +17,7 @@ message CreateRequest{
 message UpdateStudentRequest{
 	string name = 1;
 	string phoneNumber = 2;
+	string studentId =3;
 }
 
 
