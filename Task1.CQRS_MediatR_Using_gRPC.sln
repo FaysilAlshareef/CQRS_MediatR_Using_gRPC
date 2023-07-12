@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{ABCE3303-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{D6BC7D8F-673B-462E-8C9D-9F8801E032DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.Command.Test", "Student.Command.Test\Student.Command.Test.csproj", "{A145B9A9-0176-47A5-A36D-23CDDB183F7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Command.Test", "Student.Command.Test\Students.Command.Test.csproj", "{A145B9A9-0176-47A5-A36D-23CDDB183F7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

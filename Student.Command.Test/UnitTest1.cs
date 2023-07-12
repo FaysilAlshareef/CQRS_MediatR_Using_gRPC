@@ -1,4 +1,4 @@
-namespace Student.Command.Test;
+namespace Students.Command.Test;
 
 public class UnitTest1
 {

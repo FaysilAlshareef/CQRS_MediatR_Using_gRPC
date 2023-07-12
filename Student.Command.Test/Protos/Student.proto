@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Student.Command.Test.Protos";
+option csharp_namespace = "Students.Command.Test.Protos";
 
 service Student {
 	rpc Create (CreateRequest) returns (Responce);
