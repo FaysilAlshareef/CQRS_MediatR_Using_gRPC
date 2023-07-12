@@ -10,12 +10,17 @@ public class CreateStudentRequestValidator : AbstractValidator<CreateRequest>
         //RoleFor(c => c.Name)
 
         RuleFor(c => c.Name)
-               .NotEmpty();
+               .NotEmpty()
+               .WithName("Name")
+               ;
         RuleFor(c => c.Address)
-               .NotEmpty();
+               .NotEmpty()
+               .WithName("Address");
 
         RuleFor(c => c.PhoneNumber)
                .NotEmpty()
-               .MaximumLength(10);
+               .MaximumLength(10)
+               .WithName("PhoneNumber")
+               ;
     }
 }

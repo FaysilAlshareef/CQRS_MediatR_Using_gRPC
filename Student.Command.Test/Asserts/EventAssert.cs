@@ -51,5 +51,16 @@ public static class EventAssert
     {
         Assert.NotNull(studentEvent);
         Assert.NotNull(message);
+
+        Assert.Equal(studentEvent.Sequence, message.Event.Sequence);
+        Assert.Equal(1, message.Event.Version);
+        Assert.Equal(studentEvent.Type, message.Event.Type);
+        Assert.Equal(studentEvent.DateTime, message.Event.DateTime, TimeSpan.FromMinutes(1));
+
+        Assert.Equal(((StudentAddedEvent)studentEvent).Data, ((StudentAddedEvent)message.Event).Data);
+        Assert.Equal(studentEvent.Id, message.Event.Id);
+
+
+
     }
 }
