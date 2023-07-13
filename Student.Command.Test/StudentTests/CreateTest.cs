@@ -18,7 +18,7 @@ using Task1.CQRS_MediatR_Using_gRPC.Models;
 using Calzolari.Grpc.Net.Client.Validation;
 using Task1.CQRS_MediatR_Using_gRPC.Extensions;
 
-namespace Students.Command.Test.StudentTest;
+namespace Students.Command.Test.StudentTests;
 public class CreateTest : TestBase
 {
     public CreateTest(ITestOutputHelper output) : base(output)

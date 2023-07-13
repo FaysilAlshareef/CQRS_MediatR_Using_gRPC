@@ -136,6 +136,7 @@ public class UpdateTest : TestBase
         Assert.Equal(UpdateRequest.StudentId, response.Output.Id);
         Assert.Equal(UpdateRequest.Name, response.Output.Name);
         Assert.Equal(UpdateRequest.PhoneNumber, response.Output.PhoneNumber);
+        Assert.Equal(UpdateRequest.Name, uniqueReferences.Name);
 
         Assert.NotEmpty(response.Message);
 
