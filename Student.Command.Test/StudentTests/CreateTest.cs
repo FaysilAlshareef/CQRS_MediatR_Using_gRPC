@@ -15,6 +15,8 @@ using Grpc.Core;
 using Students.Command.Test.Fakers;
 using Task1.CQRS_MediatR_Using_gRPC.Data.Entities;
 using Task1.CQRS_MediatR_Using_gRPC.Models;
+using Calzolari.Grpc.Net.Client.Validation;
+using Task1.CQRS_MediatR_Using_gRPC.Extensions;
 
 namespace Students.Command.Test.StudentTest;
 public class CreateTest : TestBase
@@ -47,7 +49,7 @@ public class CreateTest : TestBase
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var studentEvents = await context.EventStore.SingleOrDefaultAsync();
         var uniqueStudent = await context.UniqueReferences.SingleOrDefaultAsync();
-        var messages = await context.OutboxMessages.SingleOrDefaultAsync();
+        var messages = await context.OutboxMessages.Include(o => o.Event).SingleOrDefaultAsync();
 
         // Assert
 
@@ -100,10 +102,10 @@ public class CreateTest : TestBase
         Assert.NotEmpty(exeption.Status.Detail);
         Assert.Equal(StatusCode.InvalidArgument, exeption.StatusCode);
 
-        //Assert.Contains(
-        //    exeption.GetValidationErrors()
-        //    , e => e.PropertyName.EndsWith(error)
-        //    );
+        Assert.Contains(
+            exeption.GetValidationErrors()
+            , e => e.PropertyName.EndsWith(error)
+            );
 
     }
 
@@ -124,5 +126,24 @@ public class CreateTest : TestBase
 
         await context.SaveChangesAsync();
 
+        await context.BuildUniqueRecordsAsync();
+
+        var grpcClient = new Student.StudentClient(Channel);
+
+        var createRequest = new CreateRequest
+        {
+            Name = name,
+            Address = "Sirt",
+            PhoneNumber = "0915552244"
+        };
+
+        //Act 
+        var exception = await Assert.ThrowsAsync<RpcException>(
+            async () => await grpcClient.CreateAsync(createRequest));
+
+        //Assert
+        Assert.NotEmpty(exception.Status.Detail);
+
+        Assert.Equal(StatusCode.AlreadyExists, exception.StatusCode);
     }
 }

@@ -19,7 +19,7 @@ public class CreateStudentRequestValidator : AbstractValidator<CreateRequest>
 
         RuleFor(c => c.PhoneNumber)
                .NotEmpty()
-               .MaximumLength(10)
+               .Length(9, 13)
                .WithName("PhoneNumber")
                ;
     }

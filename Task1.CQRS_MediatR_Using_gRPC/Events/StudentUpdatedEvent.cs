@@ -4,7 +4,7 @@ namespace Task1.CQRS_MediatR_Using_gRPC.Events;
 
 public class StudentUpdatedEvent : Event<StudentUpdatedData>
 {
-    protected StudentUpdatedEvent()
+    private StudentUpdatedEvent()
     {
 
     }

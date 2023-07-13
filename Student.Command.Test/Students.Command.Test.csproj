@@ -15,7 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="6.3.0" />
+    <PackageReference Include="Calzolari.Grpc.Net.Client.Validation" Version="6.2.0" />
+    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.55.0" />
     <PackageReference Include="Grpc.Tools" Version="2.56.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -35,10 +36,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Student\" />
   </ItemGroup>
 
   <ItemGroup>

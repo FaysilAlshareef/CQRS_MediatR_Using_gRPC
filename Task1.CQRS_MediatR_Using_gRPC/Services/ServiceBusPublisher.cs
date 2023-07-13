@@ -17,7 +17,7 @@ using Task1.CQRS_MediatR_Using_gRPC.Repositories.Interfaces;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Services
 {
-    public class ServiceBusPublisher
+    public class ServiceBusPublisher : IServiceBusPublisher
     {
         private readonly IServiceProvider _provider;
         private readonly ServiceBusSender _sender;
@@ -107,5 +107,7 @@ namespace Task1.CQRS_MediatR_Using_gRPC.Services
                 }
             });
         }
+
+
     }
 }

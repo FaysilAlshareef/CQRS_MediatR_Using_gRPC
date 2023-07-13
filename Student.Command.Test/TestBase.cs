@@ -4,78 +4,80 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Students.Command.Test;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 using Task1.CQRS_MediatR_Using_gRPC;
 using Task1.CQRS_MediatR_Using_gRPC.Data;
 using Task1.CQRS_MediatR_Using_gRPC.Services;
 using Xunit.Abstractions;
 
-[assembly: CollectionBehavior(DisableTestParallelization = TestBase.UseSqlDatabase)]
+[assembly: CollectionBehavior(DisableTestParallelization = TestBase.UseSqlDataBase)]
 namespace Students.Command.Test;
 public abstract class TestBase
 {
-    public const bool UseSqlDatabase = true;
+    public const bool UseSqlDataBase = true;
     private GrpcChannel _channel;
     private TestWebApplicationFactory<Program> _factory;
-    public ITestOutputHelper Outout { get; }
 
-    public TestBase(ITestOutputHelper output)
+    protected TestBase(ITestOutputHelper output)
     {
-        Outout = output;
+        Output = output;
     }
+
+    public ITestOutputHelper Output { get; }
 
     public GrpcChannel Channel
     {
         get
         {
-            if (_channel == null)
+            if (_channel != null)
                 return _channel;
 
             Initialize();
             return _channel ?? throw new Exception("return _channel");
         }
+
         private set => _channel = value;
     }
-    public TestWebApplicationFactory<Program> Factory
+    protected TestWebApplicationFactory<Program> Factory
     {
         get
         {
-            if (_factory == null)
+            if (_factory != null)
                 return _factory;
 
             Initialize();
-            return _factory ?? throw new Exception("return _channel");
+            return _factory ?? throw new Exception("return _factory");
         }
+
         private set => _factory = value;
     }
 
     public void Initialize(
         Action<IServiceCollection> configureTopic = null,
         Action<IServiceCollection> configureOther = null
-        )
+    )
     {
         if (configureTopic == null)
             configureTopic = services =>
             {
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(ServiceBusPublisher));
+                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IServiceBusPublisher));
+
                 services.Remove(descriptor);
 
-                var mock = new Mock<ServiceBusPublisher>();
-                mock.Setup(t => t.PublishAsync());
-                services.AddSingleton(mock.Object);
+                var mock = new Mock<IServiceBusPublisher>();
 
+                mock.Setup(t => t.PublishAsync());
+
+                services.AddSingleton(mock.Object);
             };
+
         void Configure(IServiceCollection services)
         {
             configureTopic?.Invoke(services);
             configureOther?.Invoke(services);
-        }
+        };
 
-        var factory = new TestWebApplicationFactory<Program>(Outout, Configure);
+        var factory = new TestWebApplicationFactory<Program>(Output, Configure);
+
         var client = factory.CreateClient();
 
         Channel = GrpcChannel.ForAddress(client.BaseAddress ?? throw new Exception(), new GrpcChannelOptions()
@@ -85,13 +87,13 @@ public abstract class TestBase
 
         Factory = factory;
 
-
         ResetDb();
     }
 
     private void ResetDb()
     {
-        if (UseSqlDatabase is false)
+#pragma warning disable CS8520 // The given expression always matches the provided constant.
+        if (UseSqlDataBase is false)
             return;
 
         using var scope = Factory.Services.CreateScope();
@@ -101,5 +103,7 @@ public abstract class TestBase
         context.UniqueReferences.RemoveRange(context.UniqueReferences);
         context.OutboxMessages.RemoveRange(context.OutboxMessages);
         context.SaveChanges();
+#pragma warning restore CS8520 // The given expression always matches the provided constant.
     }
+
 }

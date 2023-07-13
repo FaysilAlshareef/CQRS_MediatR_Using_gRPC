@@ -45,7 +45,7 @@ public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
             _configure(services);
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                if (TestBase.UseSqlDatabase)
+                if (TestBase.UseSqlDataBase)
                     options.UseSqlServer("Server =.; Database=StudentDb_Command.Test; Trusted_Connection=True; MultipleActiveResultSets=True; TrustServerCertificate =True;");
                 else
                     options.UseInMemoryDatabase(_dbName);

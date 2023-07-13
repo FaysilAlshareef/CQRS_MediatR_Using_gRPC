@@ -26,7 +26,7 @@ public class Program
         builder.Services.AddGrpcValidation();
         builder.Services.AddStudentValidators();
         builder.Services.AddGrpc(o => o.EnableMessageValidation());
-        builder.Services.AddSingleton(typeof(ServiceBusPublisher));
+        builder.Services.AddSingleton<IServiceBusPublisher, ServiceBusPublisher>();
         builder.Services.AddSingleton(s =>
         {
             return new ServiceBusClient(builder.Configuration["ServiceBus:ConnectionString"]);

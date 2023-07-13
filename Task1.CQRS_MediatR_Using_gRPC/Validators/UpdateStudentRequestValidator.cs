@@ -9,15 +9,19 @@ public class UpdateStudentRequestValidator : AbstractValidator<UpdateStudentRequ
     {
         RuleFor(u => u.StudentId)
             .NotEmpty()
+            .WithName("StudentId")
             .Must(studentId => Guid.TryParse(studentId, out _));
 
 
         RuleFor(c => c.Name)
-          .NotEmpty();
+          .NotEmpty()
+          .WithName("Name");
 
 
         RuleFor(c => c.PhoneNumber)
           .NotEmpty()
-          .MaximumLength(10);
+          .WithName("PhoneNumber")
+                         .Length(9, 13);
+        ;
     }
 }

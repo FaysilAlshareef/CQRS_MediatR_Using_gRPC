@@ -13,9 +13,9 @@ namespace Task1.CQRS_MediatR_Using_gRPC.Data;
 
 public class ApplicationDbContext : DbContext
 {
-    private readonly ServiceBusPublisher _publisher;
+    private readonly IServiceBusPublisher _publisher;
 
-    public ApplicationDbContext(DbContextOptions options, ServiceBusPublisher publisher) : base(options)
+    public ApplicationDbContext(DbContextOptions options, IServiceBusPublisher publisher) : base(options)
     {
         _publisher = publisher;
     }
