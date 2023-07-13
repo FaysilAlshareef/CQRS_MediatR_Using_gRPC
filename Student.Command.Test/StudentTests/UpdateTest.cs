@@ -43,6 +43,7 @@ public class UpdateTest : TestBase
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         var createEvent = new StudentAddedFaker()
+            .RuleFor(c => c.AggregateId, Guid.Parse(studentId))
             .RuleFor(c => c.Data, new StudentAddedDataFaker()
             .Generate())
             .Generate();
@@ -165,7 +166,7 @@ public class UpdateTest : TestBase
         var UpdateRequest = new UpdateStudentRequest
         {
             StudentId = createEvent.AggregateId.ToString(),
-            Name = createEvent.Data.Name,
+            Name = "Ali",
             PhoneNumber = createEvent.Data.Phone_Number
         };
 
@@ -200,8 +201,9 @@ public class UpdateTest : TestBase
 
         var updateEvent = new StudentUpdatedFaker()
             .RuleFor(c => c.AggregateId, createEvent.AggregateId)
-            .RuleFor(c => c.Sequence, 1)
+            .RuleFor(c => c.Sequence, 2)
             .RuleFor(c => c.Data, new StudentUpdatedDataFaker()
+            .RuleFor(c => c.StudentId, createEvent.AggregateId)
             .Generate())
             .Generate();
 
@@ -209,7 +211,7 @@ public class UpdateTest : TestBase
         await context.EventStore.AddAsync(updateEvent);
 
         await context.SaveChangesAsync();
-        await context.BuildUniqueRecordsAsync();
+        await context.BuildUniqueRecordsAsync(createEvent.AggregateId);
 
         context.ChangeTracker.Clear();
 
@@ -247,7 +249,7 @@ public class UpdateTest : TestBase
     [InlineData("e477cd72-541c-4a4a-bf9d-5e86c21232d7", "Faysil", "091555", "PhoneNumber")]
     [InlineData("e477cd72-541c-4a4a-bf9d-5e86c21232d7", "Faysil", "09155555454545", "PhoneNumber")]
     public async Task Update_UpdateStudentWithInvalidDate_ReturnInvalidArgument(
-         string studentId,
+        string studentId,
         string name,
         string phoneNumber,
         string error)
@@ -258,20 +260,11 @@ public class UpdateTest : TestBase
         using var scope = Factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        var createEvent = new StudentAddedFaker()
-            .RuleFor(c => c.Data, new StudentAddedDataFaker()
-            .Generate())
-            .Generate();
 
-        await context.EventStore.AddAsync(createEvent);
-        await context.SaveChangesAsync();
-        await context.BuildUniqueRecordsAsync();
-
-        context.ChangeTracker.Clear();
 
         var updateRequest = new UpdateStudentRequest
         {
-            StudentId = createEvent.AggregateId.ToString(),
+            StudentId = studentId,
             Name = name,
             PhoneNumber = phoneNumber
         };
@@ -296,7 +289,7 @@ public class UpdateTest : TestBase
 
         var count = await context.EventStore.CountAsync();
 
-        Assert.Equal(1, count);
+        Assert.Equal(0, count);
         #endregion
     }
 
@@ -358,7 +351,8 @@ public class UpdateTest : TestBase
         await context.EventStore.AddAsync(createdFirstEvent);
         await context.EventStore.AddAsync(createdSecondEvent);
         await context.SaveChangesAsync();
-        await context.BuildUniqueRecordsAsync();
+        await context.BuildUniqueRecordsAsync(createdFirstEvent.AggregateId);
+        await context.BuildUniqueRecordsAsync(createdSecondEvent.AggregateId);
 
         context.ChangeTracker.Clear();
 

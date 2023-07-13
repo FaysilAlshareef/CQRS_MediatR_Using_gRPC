@@ -20,7 +20,7 @@ public class StudentUpdateHandler : IRequestHandler<StudentUpdateCommand, Studen
     {
         if (await _context.UniqueReferences.AnyAsync(u => u.Name == command.Name && u.Id != command.studentId, cancellationToken))
         {
-            throw new RpcException(new Status(StatusCode.AlreadyExists, ""));
+            throw new RpcException(new Status(StatusCode.AlreadyExists, "Name is Exist For Another Student"));
         }
         var events = await _context.EventStore.Where(e => e.AggregateId == command.studentId)
                                              .OrderBy(e => e.Sequence)

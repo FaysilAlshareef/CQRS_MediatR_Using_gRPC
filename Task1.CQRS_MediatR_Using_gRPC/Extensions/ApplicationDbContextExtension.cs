@@ -19,24 +19,44 @@ public static class ApplicationDbContextExtension
             return;
 
         var events = await context.EventStore
-                                  .OfType<StudentAddedEvent>()
+                                  .Where(e => e.Type == Enums.EventType.StudentAdded)
                                   .ToListAsync();
 
-        foreach (var @event in events)
+        var student = Student.LoadFromHistory(events);
+
+        var uniqueReference = new UniqueReference(student);
+
+        await context.UniqueReferences.AddAsync(uniqueReference);
+
+        try
         {
-            var data = @event.Data;
-
-            var createCommand = new StudentAddCommand(
-                data.Name,
-                data.Address,
-                data.Phone_Number);
-
-            var student = Student.Create(createCommand);
-
-            var uniqueReference = new UniqueReference(student);
-
-            await context.UniqueReferences.AddAsync(uniqueReference);
+            await context.SaveChangesAsync();
         }
+        catch (Exception e)
+        {
+            logger?.LogError(e, "Build unique tables failed.");
+            throw;
+        }
+    }
+
+    public static async Task BuildUniqueRecordsAsync(
+          this ApplicationDbContext context,
+          Guid aggregateId,
+          ILogger logger = null
+      )
+    {
+        if (await context.UniqueReferences.AnyAsync())
+            return;
+
+        var events = await context.EventStore
+                                  .Where(e => e.AggregateId == aggregateId)
+                                  .ToListAsync();
+
+        var student = Student.LoadFromHistory(events);
+
+        var uniqueReference = new UniqueReference(student);
+
+        await context.UniqueReferences.AddAsync(uniqueReference);
 
         try
         {

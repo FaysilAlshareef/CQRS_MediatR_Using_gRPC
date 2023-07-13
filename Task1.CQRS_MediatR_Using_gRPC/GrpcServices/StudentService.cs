@@ -37,7 +37,7 @@ public class StudentService : Student.StudentBase
 
         return new Responce()
         {
-            Message = "",
+            Message = "Student Updated Successfuly",
             Output = student.ToOutput()
 
         };

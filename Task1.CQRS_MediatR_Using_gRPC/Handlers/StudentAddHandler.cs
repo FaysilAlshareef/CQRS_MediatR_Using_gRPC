@@ -21,7 +21,7 @@ public class StudentAddHandler : IRequestHandler<StudentAddCommand, Student>
     {
         if (await _context.UniqueReferences.AnyAsync(u => u.Name == command.Name, cancellationToken))
         {
-            throw new RpcException(new Status(StatusCode.AlreadyExists, ""));
+            throw new RpcException(new Status(StatusCode.AlreadyExists, "Name Is Exist"));
         }
 
         var student = Student.Create(command);
