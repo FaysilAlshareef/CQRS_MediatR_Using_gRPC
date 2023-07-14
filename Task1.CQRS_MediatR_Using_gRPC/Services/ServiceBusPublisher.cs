@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,20 +93,23 @@ namespace Task1.CQRS_MediatR_Using_gRPC.Services
                 Data = ((dynamic)@event).Data
             };
 
-            var json = JsonConvert.SerializeObject(body);
+            var messageBody = JsonConvert.SerializeObject(body, new StringEnumConverter());
 
-            await _sender.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes(json))
+            var message = new ServiceBusMessage(Encoding.UTF8.GetBytes(messageBody))
             {
                 CorrelationId = @event.Id.ToString(),
                 MessageId = @event.Id.ToString(),
                 PartitionKey = @event.AggregateId.ToString(),
+                SessionId = @event.AggregateId.ToString(),
                 Subject = @event.Type.ToString(),
                 ApplicationProperties = {
                     { nameof(@event.AggregateId), @event.AggregateId },
                     { nameof(@event.Sequence), @event.Sequence },
                     { nameof(@event.Version), @event.Version },
                 }
-            });
+            };
+
+            await _sender.SendMessageAsync(message);
         }
 
 
