@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "Task1.CQRS_MediatR_Using_gRPC.Protos";
+
+import "google/protobuf/empty.proto";
+
+
+service DemoEvents{
+	rpc Create (CreateDemoRequest) returns (google.protobuf.Empty);
+	rpc Update (UpdateDemoRequest) returns (google.protobuf.Empty);
+}
+
+
+message CreateDemoRequest {
+	string user_id =1;
+	string name =2;
+	string phoneNumber =3;
+	string Address =4;
+	string id= 5;
+}
+
+message UpdateDemoRequest {
+	string user_id =1;
+	string name =2;
+	string phoneNumber =3;
+	int32 sequence =4;
+	string id= 5;
+}

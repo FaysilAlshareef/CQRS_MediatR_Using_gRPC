@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\demo_events.proto" />
     <None Remove="Protos\Student.proto" />
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\demo_events.proto" />
     <Protobuf Include="Protos\Student.proto" />
   </ItemGroup>
 
