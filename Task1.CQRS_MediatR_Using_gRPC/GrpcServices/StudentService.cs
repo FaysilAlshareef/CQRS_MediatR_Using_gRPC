@@ -3,7 +3,7 @@ using MediatR;
 using Task1.CQRS_MediatR_Using_gRPC.Extensions;
 
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
-
+using Task1.CQRS_MediatR_Using_gRPC.Resources;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.GrpcServices;
 
@@ -25,7 +25,7 @@ public class StudentService : Student.StudentBase
 
         return new Responce()
         {
-            Message = "Success Added Student",
+            Message = Phrases.SuccessCreated,
             Output = student.ToOutput()
         };
     }
@@ -37,7 +37,7 @@ public class StudentService : Student.StudentBase
 
         return new Responce()
         {
-            Message = "Student Updated Successfuly",
+            Message = Phrases.SuccessUpdated,
             Output = student.ToOutput()
 
         };

@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Task1.CQRS_MediatR_Using_gRPC.Commands;
 using Task1.CQRS_MediatR_Using_gRPC.Data;
 using Task1.CQRS_MediatR_Using_gRPC.Data.Entities;
+using Task1.CQRS_MediatR_Using_gRPC.Exceptions;
 using Task1.CQRS_MediatR_Using_gRPC.Models;
+using Task1.CQRS_MediatR_Using_gRPC.Resources;
 using Task1.CQRS_MediatR_Using_gRPC.ReturnMessages;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Handlers;
@@ -21,7 +23,7 @@ public class StudentAddHandler : IRequestHandler<StudentAddCommand, Student>
     {
         if (await _context.UniqueReferences.AnyAsync(u => u.Name == command.Name, cancellationToken))
         {
-            throw new RpcException(new Status(StatusCode.AlreadyExists, "Name Is Exist"));
+            throw new AppException(ExceptionStatusCode.AlreadyExists, Phrases.StudentNameAlreadyExist);
         }
 
         var student = Student.Create(command);

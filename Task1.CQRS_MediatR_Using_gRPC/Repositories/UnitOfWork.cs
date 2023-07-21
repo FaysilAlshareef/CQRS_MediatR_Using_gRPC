@@ -11,8 +11,11 @@ public class UnitOfWork : IUnitOfWork
     {
         _context = context;
         OutboxMessages = new OutboxMessagesRepository(context);
+        Events = new EventsRepository(context);
     }
     public IOutboxMassegesRepository OutboxMessages { get; }
+
+    public IEventsRepository Events { get; }
 
     public async Task<int> CompleteAsync()
     => await _context.SaveChangesAsync();

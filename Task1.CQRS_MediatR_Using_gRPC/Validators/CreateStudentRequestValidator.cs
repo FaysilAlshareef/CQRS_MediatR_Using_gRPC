@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
+using Task1.CQRS_MediatR_Using_gRPC.Resources;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Validators;
 
@@ -12,15 +13,18 @@ public class CreateStudentRequestValidator : AbstractValidator<CreateRequest>
         RuleFor(c => c.Name)
                .NotEmpty()
                .WithName("Name")
+               .WithMessage(Phrases.StudentNameNotSend)
                ;
         RuleFor(c => c.Address)
                .NotEmpty()
-               .WithName("Address");
+               .WithName("Address")
+               .WithMessage(Phrases.StudentAddressNotSend)
+               ;
 
         RuleFor(c => c.PhoneNumber)
                .NotEmpty()
                .Length(9, 13)
                .WithName("PhoneNumber")
-               ;
+               .WithMessage(Phrases.PleaseEnterPhoneNumber);
     }
 }

@@ -3,5 +3,6 @@
 public interface IUnitOfWork : IDisposable
 {
     IOutboxMassegesRepository OutboxMessages { get; }
+    IEventsRepository Events { get; }
     Task<int> CompleteAsync();
 }
