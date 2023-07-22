@@ -1,6 +1,6 @@
-﻿using Grpc.Core.Interceptors;
-using Grpc.Core;
-using Task1.CQRS_MediatR_Using_gRPC.Exceptions;
+﻿using Grpc.Core;
+using Grpc.Core.Interceptors;
+using Task1.Command.Domain.Exceptions;
 using Task1.CQRS_MediatR_Using_gRPC.Extensions;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.ExceptionHandler;

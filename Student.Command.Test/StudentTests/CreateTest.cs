@@ -1,22 +1,13 @@
-﻿using Student = Students.Command.Test.Protos.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xunit.Abstractions;
-using Students.Command.Test.Protos;
-using Microsoft.Extensions.DependencyInjection;
-using Task1.CQRS_MediatR_Using_gRPC.Data;
-using Microsoft.EntityFrameworkCore;
-using Students.Command.Test.Asserts;
+﻿using Calzolari.Grpc.Net.Client.Validation;
 using Grpc.Core;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Students.Command.Test.Asserts;
 using Students.Command.Test.Fakers;
-using Task1.CQRS_MediatR_Using_gRPC.Data.Entities;
-using Task1.CQRS_MediatR_Using_gRPC.Models;
-using Calzolari.Grpc.Net.Client.Validation;
-using Task1.CQRS_MediatR_Using_gRPC.Extensions;
+using Students.Command.Test.Protos;
+using Task1.Command.Infra.Persistence;
+using Xunit.Abstractions;
+using Student = Students.Command.Test.Protos.Student;
 
 namespace Students.Command.Test.StudentTests;
 public class CreateTest : TestBase

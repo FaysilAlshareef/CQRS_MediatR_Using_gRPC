@@ -1,10 +1,10 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Task1.CQRS_MediatR_Using_gRPC.Events;
-using Task1.CQRS_MediatR_Using_gRPC.Events.DataTypes;
-using Task1.CQRS_MediatR_Using_gRPC.Exceptions;
+using Task1.Command.Application.Contracts.Services.ServiceBus;
+using Task1.Command.Domain.Events;
+using Task1.Command.Domain.Events.DataTypes;
+using Task1.Command.Domain.Exceptions;
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
-using Task1.CQRS_MediatR_Using_gRPC.Services;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.GrpcServices;
 

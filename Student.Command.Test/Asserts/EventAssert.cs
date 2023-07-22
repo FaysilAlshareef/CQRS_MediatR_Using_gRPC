@@ -1,12 +1,7 @@
 ﻿using Students.Command.Test.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task1.CQRS_MediatR_Using_gRPC.Data.Entities;
-using Task1.CQRS_MediatR_Using_gRPC.Enums;
-using Task1.CQRS_MediatR_Using_gRPC.Events;
+using Task1.Command.Domain.Entities;
+using Task1.Command.Domain.Enums;
+using Task1.Command.Domain.Events;
 
 namespace Students.Command.Test.Asserts;
 public static class EventAssert

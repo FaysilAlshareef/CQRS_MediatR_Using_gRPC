@@ -1,5 +1,5 @@
 ﻿using Grpc.Core;
-using Task1.CQRS_MediatR_Using_gRPC.Exceptions;
+using Task1.Command.Domain.Exceptions;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Extensions;
 

@@ -2,15 +2,9 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task1.CQRS_MediatR_Using_gRPC.Data;
+using Task1.Command.Infra.Persistence;
 using Xunit.Abstractions;
 
 namespace Students.Command.Test;

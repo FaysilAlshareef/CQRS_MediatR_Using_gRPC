@@ -3,10 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Students.Command.Test;
-using System;
+using Task1.Command.Application.Contracts.Services.ServiceBus;
+using Task1.Command.Infra.Persistence;
 using Task1.CQRS_MediatR_Using_gRPC;
-using Task1.CQRS_MediatR_Using_gRPC.Data;
-using Task1.CQRS_MediatR_Using_gRPC.Services;
 using Xunit.Abstractions;
 
 [assembly: CollectionBehavior(DisableTestParallelization = TestBase.UseSqlDataBase)]

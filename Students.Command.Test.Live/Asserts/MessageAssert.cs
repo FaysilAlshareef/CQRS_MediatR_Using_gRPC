@@ -1,14 +1,9 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Task1.CQRS_MediatR_Using_gRPC.Commands;
-using Task1.CQRS_MediatR_Using_gRPC.Events;
-using Task1.CQRS_MediatR_Using_gRPC.Events.DataTypes;
-using Task1.CQRS_MediatR_Using_gRPC.Services;
+using Task1.Command.Domain.Events;
+using Task1.Command.Domain.Events.DataTypes;
+using Task1.Command.Infra.Services.ServiceBus;
 
 namespace Students.Command.Test.Live.Asserts;
 public class MessageAssert

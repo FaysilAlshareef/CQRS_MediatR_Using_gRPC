@@ -1,4 +1,5 @@
-﻿using Task1.CQRS_MediatR_Using_gRPC.Commands;
+﻿using Task1.Command.Application.Features.AddStudent;
+using Task1.Command.Application.Features.UpdateStudent;
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.Extensions;

@@ -1,7 +1,7 @@
 ﻿using Grpc.Core;
+using Task1.Command.Application.Contracts.Repositories;
 using Task1.CQRS_MediatR_Using_gRPC.Extensions;
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
-using Task1.CQRS_MediatR_Using_gRPC.Repositories.Interfaces;
 
 namespace Task1.CQRS_MediatR_Using_gRPC.GrpcServices;
 

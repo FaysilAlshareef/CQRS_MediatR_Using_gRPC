@@ -1,22 +1,12 @@
-﻿using Bogus.DataSets;
-using Calzolari.Grpc.Net.Client.Validation;
+﻿using Calzolari.Grpc.Net.Client.Validation;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Students.Command.Test.Asserts;
 using Students.Command.Test.Fakers;
 using Students.Command.Test.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task1.CQRS_MediatR_Using_gRPC.Data;
-using Task1.CQRS_MediatR_Using_gRPC.Enums;
-using Task1.CQRS_MediatR_Using_gRPC.Events;
-using Task1.CQRS_MediatR_Using_gRPC.Extensions;
-
-using Xunit;
+using Task1.Command.Domain.Enums;
+using Task1.Command.Infra.Persistence;
 using Xunit.Abstractions;
 using Student = Students.Command.Test.Protos.Student;
 

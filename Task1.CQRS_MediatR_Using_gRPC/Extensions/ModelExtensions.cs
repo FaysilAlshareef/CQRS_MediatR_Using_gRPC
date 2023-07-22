@@ -3,9 +3,9 @@ using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Task1.CQRS_MediatR_Using_gRPC.Events;
+using Task1.Command.Domain.Events;
 using Task1.CQRS_MediatR_Using_gRPC.Protos;
-using Student = Task1.CQRS_MediatR_Using_gRPC.Models.Student;
+using Student = Task1.Command.Domain.Models.Student;
 
 public static class ModelExtensions
 {
